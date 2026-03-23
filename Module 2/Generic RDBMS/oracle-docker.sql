@@ -187,7 +187,8 @@ BEGIN
     IF v_total_hours > 24 THEN
         RAISE_APPLICATION_ERROR(
             -20002,
-            'Total number of hours on this day is higher than 24'
+            'Total number of hours on this day ' || TO_CHAR(:NEW.work_date, 'YYYY-MM-DD') 
+            || ' is higher than 24 for the entry id: ' || :NEW.entry_id || '. Computed total hours: ' || v_total_hours
         );
     END IF;
 END;
@@ -794,3 +795,5 @@ VALUES (
     DATE '2026-03-03',
     20
 );
+
+COMMIT;
