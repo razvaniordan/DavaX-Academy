@@ -1,6 +1,4 @@
---------------------------------------------------
--- SECTION 1. TABLE CREATION
---------------------------------------------------
+-- TABLE CREATION
 
 -- departments like HR IT etc. that have multiple employees, one manager, and there is one unique department per city (one office per city)
 CREATE TABLE Departments (
@@ -9,8 +7,7 @@ CREATE TABLE Departments (
     city_location       VARCHAR2(100) NOT NULL,
     manager_id          NUMBER UNIQUE,
     
-    CONSTRAINT unique_department_location
-        UNIQUE (department_name, city_location)
+    CONSTRAINT unique_department_location UNIQUE (department_name, city_location)
 );
 
 CREATE TABLE Employees (
@@ -25,20 +22,14 @@ CREATE TABLE Employees (
     email         VARCHAR2(100) UNIQUE NOT NULL,
     phone         VARCHAR2(15) UNIQUE,
     salary        NUMBER(10,2) NOT NULL CHECK (salary > 0),
-    status        VARCHAR2(20) DEFAULT 'ACTIVE' NOT NULL 
-                  CHECK (status IN ('ACTIVE','INACTIVE','ON_LEAVE')),
+    status        VARCHAR2(20) DEFAULT 'ACTIVE' NOT NULL CHECK (status IN ('ACTIVE','INACTIVE','ON_LEAVE')),
     department_id NUMBER NOT NULL,
     manager_id    NUMBER,
     extra_info    CLOB CHECK (extra_info IS JSON),
 
-    CONSTRAINT check_employee_birth_hire
-        CHECK (hire_date >= ADD_MONTHS(birth_date, 12 * 18)),
-
-    CONSTRAINT fk_employee_department
-        FOREIGN KEY (department_id) REFERENCES Departments(department_id),
-
-    CONSTRAINT fk_employee_manager
-        FOREIGN KEY (manager_id) REFERENCES Employees(employee_id)
+    CONSTRAINT check_employee_birth_hire CHECK (hire_date >= ADD_MONTHS(birth_date, 12 * 18)),
+    CONSTRAINT fk_employee_department FOREIGN KEY (department_id) REFERENCES Departments(department_id),
+    CONSTRAINT fk_employee_manager FOREIGN KEY (manager_id) REFERENCES Employees(employee_id)
 );
 
 ALTER TABLE Departments
@@ -51,22 +42,14 @@ CREATE TABLE Timesheets (
     employee_id      NUMBER NOT NULL,
     week_start_date  DATE NOT NULL,
     week_end_date    DATE NOT NULL,
-    status           VARCHAR2(20) DEFAULT 'PENDING' NOT NULL
-                     CHECK (status IN ('PENDING', 'ACCEPTED', 'REJECTED')),
+    status           VARCHAR2(20) DEFAULT 'PENDING' NOT NULL CHECK (status IN ('PENDING', 'ACCEPTED', 'REJECTED')),
     submitted_at     DATE NOT NULL,
     reviewed_at      DATE,
 
-    CONSTRAINT unique_timesheet_employee_week
-        UNIQUE (employee_id, week_start_date, week_end_date),
-
-    CONSTRAINT check_timesheet_week_interval
-        CHECK (week_end_date = week_start_date + 6),
-        
-    CONSTRAINT check_first_day
-        CHECK (TO_CHAR(week_start_date, 'DY', 'NLS_DATE_LANGUAGE=ENGLISH') = 'MON'),
-
-    CONSTRAINT fk_timesheet_employee
-        FOREIGN KEY (employee_id) REFERENCES Employees(employee_id)
+    CONSTRAINT unique_timesheet_employee_week UNIQUE (employee_id, week_start_date, week_end_date),
+    CONSTRAINT check_timesheet_week_interval CHECK (week_end_date = week_start_date + 6),
+    CONSTRAINT check_first_day CHECK (TO_CHAR(week_start_date, 'DY', 'NLS_DATE_LANGUAGE=ENGLISH') = 'MON'),
+    CONSTRAINT fk_timesheet_employee FOREIGN KEY (employee_id) REFERENCES Employees(employee_id)
 );
 
 -- the entries for the weeks stored in Timesheet table
@@ -80,26 +63,18 @@ CREATE TABLE Timesheet_Entries (
     absence_type        VARCHAR2(50),
     relocated_country   VARCHAR2(50),
 
-    CONSTRAINT check_location_work
-        CHECK (location_work IN ('HOME', 'OFFICE', 'RELOCATED')),
-
-    CONSTRAINT fk_entries_timesheet
-        FOREIGN KEY (timesheet_id) REFERENCES Timesheets(timesheet_id)
+    CONSTRAINT check_location_work CHECK (location_work IN ('HOME', 'OFFICE', 'RELOCATED')),
+    CONSTRAINT fk_entries_timesheet FOREIGN KEY (timesheet_id) REFERENCES Timesheets(timesheet_id)
 );
 
 -- a table for the number of hours of each day of an entry from a specific week
 CREATE TABLE Entry_Daily_Hours (
     entry_id         NUMBER NOT NULL,
     work_date        DATE NOT NULL,
-    hours_quantity   NUMBER(4,2) NOT NULL
-                     CHECK (hours_quantity >= 0 AND hours_quantity <= 24),
+    hours_quantity   NUMBER(4,2) NOT NULL CHECK (hours_quantity >= 0 AND hours_quantity <= 24),
 
-    CONSTRAINT pk_entry_daily_hours
-        PRIMARY KEY (entry_id, work_date),
-
-    CONSTRAINT fk_day_entry
-        FOREIGN KEY (entry_id) REFERENCES Timesheet_Entries(entry_id)
-        ON DELETE CASCADE
+    CONSTRAINT pk_entry_daily_hours PRIMARY KEY (entry_id, work_date),
+    CONSTRAINT fk_day_entry FOREIGN KEY (entry_id) REFERENCES Timesheet_Entries(entry_id) ON DELETE CASCADE
 );
 
 -- almost the same thing as the timesheets, but for storing templates
@@ -109,12 +84,8 @@ CREATE TABLE Timesheet_Templates (
     template_name    VARCHAR2(100) NOT NULL,
     created_at       DATE DEFAULT SYSDATE NOT NULL,
 
-    CONSTRAINT fk_template_employee
-        FOREIGN KEY (employee_id) REFERENCES Employees(employee_id)
-        ON DELETE CASCADE,
-
-    CONSTRAINT unique_template_name_per_employee
-        UNIQUE (employee_id, template_name)
+    CONSTRAINT fk_template_employee FOREIGN KEY (employee_id) REFERENCES Employees(employee_id) ON DELETE CASCADE,
+    CONSTRAINT unique_template_name_per_employee UNIQUE (employee_id, template_name)
 );
 
 CREATE TABLE Timesheet_Template_Entries (
@@ -127,34 +98,22 @@ CREATE TABLE Timesheet_Template_Entries (
     absence_type         VARCHAR2(50),
     relocated_country    VARCHAR2(50),
 
-    CONSTRAINT check_template_location_work
-        CHECK (location_work IN ('HOME', 'OFFICE', 'RELOCATED')),
-
-    CONSTRAINT fk_template_entries_template
-        FOREIGN KEY (template_id) REFERENCES Timesheet_Templates(template_id)
-        ON DELETE CASCADE
+    CONSTRAINT check_template_location_work CHECK (location_work IN ('HOME', 'OFFICE', 'RELOCATED')),
+    CONSTRAINT fk_template_entries_template FOREIGN KEY (template_id) REFERENCES Timesheet_Templates(template_id) ON DELETE CASCADE
 );
 
 CREATE TABLE Template_Daily_Hours (
     template_entry_id    NUMBER NOT NULL,
     day_of_week          NUMBER NOT NULL,
-    hours_quantity       NUMBER(4,2) NOT NULL
-                         CHECK (hours_quantity >= 0 AND hours_quantity <= 24),
+    hours_quantity       NUMBER(4,2) NOT NULL CHECK (hours_quantity >= 0 AND hours_quantity <= 24),
 
-    CONSTRAINT pk_template_daily_hours
-        PRIMARY KEY (template_entry_id, day_of_week),
-
-    CONSTRAINT check_template_day_of_week
-        CHECK (day_of_week BETWEEN 1 AND 7),
-
-    CONSTRAINT fk_template_daily_hours_entry
-        FOREIGN KEY (template_entry_id) REFERENCES Timesheet_Template_Entries(template_entry_id)
-        ON DELETE CASCADE
+    CONSTRAINT pk_template_daily_hours PRIMARY KEY (template_entry_id, day_of_week),
+    CONSTRAINT check_template_day_of_week CHECK (day_of_week BETWEEN 1 AND 7),
+    CONSTRAINT fk_template_daily_hours_entry FOREIGN KEY (template_entry_id) REFERENCES Timesheet_Template_Entries(template_entry_id) ON DELETE CASCADE
 );
 
---------------------------------------------------
--- SECTION 2. INDEX & TRIGGER CREATION
---------------------------------------------------
+
+-- INDEX & TRIGGER CREATION
 CREATE INDEX idx_timesheets_week_start ON Timesheets(week_start_date);
 
 CREATE INDEX idx_timesheets_status ON Timesheets(status);
@@ -172,42 +131,31 @@ BEGIN
     SELECT NVL(SUM(edh.hours_quantity), 0)
     INTO v_total_hours
     FROM Entry_Daily_Hours edh
-    JOIN Timesheet_Entries te
-      ON edh.entry_id = te.entry_id
+    JOIN Timesheet_Entries te ON edh.entry_id = te.entry_id
     WHERE te.timesheet_id = (
         SELECT timesheet_id
         FROM Timesheet_Entries
         WHERE entry_id = :NEW.entry_id
-    )
-      AND edh.work_date = :NEW.work_date
-      AND edh.entry_id <> :NEW.entry_id;
+    ) AND edh.work_date = :NEW.work_date AND edh.entry_id <> :NEW.entry_id;
 
     v_total_hours := v_total_hours + :NEW.hours_quantity;
 
     IF v_total_hours > 24 THEN
         RAISE_APPLICATION_ERROR(
             -20002,
-            'Total number of hours on this day ' || TO_CHAR(:NEW.work_date, 'YYYY-MM-DD') 
-            || ' is higher than 24 for the entry id: ' || :NEW.entry_id || '. Computed total hours: ' || v_total_hours
+            'Total number of hours on this day is higher than 24'
         );
     END IF;
 END;
 /
 
 
---------------------------------------------------
--- SECTION 3. TABLES POPULATING
---------------------------------------------------
+-- TABLES POPULATING
 
 -- filling Departments table with values
-INSERT INTO Departments (department_name, city_location, manager_id)
-VALUES ('IT', 'Bucharest', NULL);
-
-INSERT INTO Departments (department_name, city_location, manager_id)
-VALUES ('HR', 'Cluj-Napoca', NULL);
-
-INSERT INTO Departments (department_name, city_location, manager_id)
-VALUES ('Finance', 'Bucharest', NULL);
+INSERT INTO Departments (department_name, city_location, manager_id) VALUES ('IT', 'Bucharest', NULL);
+INSERT INTO Departments (department_name, city_location, manager_id) VALUES ('HR', 'Cluj-Napoca', NULL);
+INSERT INTO Departments (department_name, city_location, manager_id) VALUES ('Finance', 'Bucharest', NULL);
 
 --    filling Employees table with values (100 employees)
 --    Department distribution:
@@ -467,10 +415,8 @@ BEGIN
                te.location_work,
                e.job_title
         FROM Timesheet_Entries te
-        JOIN Timesheets t
-          ON te.timesheet_id = t.timesheet_id
-        JOIN Employees e
-          ON t.employee_id = e.employee_id
+        JOIN Timesheets t ON te.timesheet_id = t.timesheet_id
+        JOIN Employees e ON t.employee_id = e.employee_id
     ) LOOP
         -- d = 0 Monday, 1 Tuesday, 2 Wednesday, 3 Thursday, 4 Friday
         FOR d IN 0..4 LOOP
@@ -479,32 +425,14 @@ BEGIN
                    OR
                    (r.location_work = 'OFFICE' AND d = 3)
                 THEN
-                    INSERT INTO Entry_Daily_Hours (
-                        entry_id,
-                        work_date,
-                        hours_quantity
-                    )
-                    VALUES (
-                        r.entry_id,
-                        r.week_start_date + d,
-                        8
-                    );
+                    INSERT INTO Entry_Daily_Hours (entry_id, work_date, hours_quantity) VALUES (r.entry_id, r.week_start_date + d, 8);
                 END IF;
             ELSE
                 IF (r.location_work = 'HOME'   AND d IN (0,1,4))
                    OR
                    (r.location_work = 'OFFICE' AND d IN (2,3))
                 THEN
-                    INSERT INTO Entry_Daily_Hours (
-                        entry_id,
-                        work_date,
-                        hours_quantity
-                    )
-                    VALUES (
-                        r.entry_id,
-                        r.week_start_date + d,
-                        8
-                    );
+                    INSERT INTO Entry_Daily_Hours (entry_id, work_date, hours_quantity) VALUES (r.entry_id, r.week_start_date + d, 8);
                 END IF;
             END IF;
         END LOOP;
@@ -516,18 +444,7 @@ END;
 --    only employees 1..10 will have templates
 BEGIN
     FOR i IN 1..10 LOOP
-        INSERT INTO Timesheet_Templates (
-            template_id,
-            employee_id,
-            template_name,
-            created_at
-        )
-        VALUES (
-            5000 + i,
-            i,
-            'Standard Template ' || i,
-            SYSDATE
-        );
+        INSERT INTO Timesheet_Templates (template_id, employee_id, template_name, created_at) VALUES (5000 + i, i, 'Standard Template ' || i, SYSDATE);
     END LOOP;
 END;
 /
@@ -597,10 +514,8 @@ BEGIN
                tte.location_work,
                e.job_title
         FROM Timesheet_Template_Entries tte
-        JOIN Timesheet_Templates tt
-          ON tte.template_id = tt.template_id
-        JOIN Employees e
-          ON tt.employee_id = e.employee_id
+        JOIN Timesheet_Templates tt ON tte.template_id = tt.template_id
+        JOIN Employees e ON tt.employee_id = e.employee_id
     ) LOOP
         FOR d IN 1..5 LOOP
             IF r.job_title = 'DavaX Junior' THEN
@@ -608,32 +523,14 @@ BEGIN
                    OR
                    (r.location_work = 'OFFICE' AND d = 4)
                 THEN
-                    INSERT INTO Template_Daily_Hours (
-                        template_entry_id,
-                        day_of_week,
-                        hours_quantity
-                    )
-                    VALUES (
-                        r.template_entry_id,
-                        d,
-                        8
-                    );
+                    INSERT INTO Template_Daily_Hours (template_entry_id, day_of_week, hours_quantity) VALUES (r.template_entry_id, d, 8);
                 END IF;
             ELSE
                 IF (r.location_work = 'HOME'   AND d IN (1,2,5))
                    OR
                    (r.location_work = 'OFFICE' AND d IN (3,4))
                 THEN
-                    INSERT INTO Template_Daily_Hours (
-                        template_entry_id,
-                        day_of_week,
-                        hours_quantity
-                    )
-                    VALUES (
-                        r.template_entry_id,
-                        d,
-                        8
-                    );
+                    INSERT INTO Template_Daily_Hours (template_entry_id, day_of_week, hours_quantity) VALUES (r.template_entry_id, d, 8);
                 END IF;
             END IF;
         END LOOP;
@@ -660,14 +557,10 @@ SELECT
     edh.work_date,
     edh.hours_quantity
 FROM EMPLOYEES e
-LEFT JOIN TIMESHEETS t
-ON e.employee_id = t.employee_id
-INNER JOIN DEPARTMENTS d
-ON e.department_id = d.department_id
-LEFT JOIN TIMESHEET_ENTRIES te
-ON t.timesheet_id = te.timesheet_id
-LEFT JOIN ENTRY_DAILY_HOURS edh
-ON te.entry_id = edh.entry_id  
+LEFT JOIN TIMESHEETS t ON e.employee_id = t.employee_id
+INNER JOIN DEPARTMENTS d ON e.department_id = d.department_id
+LEFT JOIN TIMESHEET_ENTRIES te ON t.timesheet_id = te.timesheet_id
+LEFT JOIN ENTRY_DAILY_HOURS edh ON te.entry_id = edh.entry_id  
 WHERE e.job_title = 'DavaX Junior' AND e.status = 'ACTIVE';
 
 -- here I tested the view by searching for a specific DavaX employee
@@ -687,12 +580,9 @@ SELECT
     t.status,
     NVL(SUM(edh.hours_quantity), 0) AS total_hours
 FROM Employees e
-JOIN Timesheets t
-  ON e.employee_id = t.employee_id
-LEFT JOIN Timesheet_Entries te
-  ON t.timesheet_id = te.timesheet_id
-LEFT JOIN Entry_Daily_Hours edh
-  ON te.entry_id = edh.entry_id
+JOIN Timesheets t ON e.employee_id = t.employee_id
+LEFT JOIN Timesheet_Entries te ON t.timesheet_id = te.timesheet_id
+LEFT JOIN Entry_Daily_Hours edh ON te.entry_id = edh.entry_id
 GROUP BY
     e.employee_id,
     e.first_name,
@@ -709,13 +599,9 @@ SELECT
     e.first_name || ' ' || e.last_name AS employee_name,
     NVL(SUM(edh.hours_quantity), 0) AS total_hours
 FROM Employees e
-LEFT JOIN Timesheets t
-  ON e.employee_id = t.employee_id
- AND t.status = 'ACCEPTED'
-LEFT JOIN Timesheet_Entries te
-  ON t.timesheet_id = te.timesheet_id
-LEFT JOIN Entry_Daily_Hours edh
-  ON te.entry_id = edh.entry_id
+LEFT JOIN Timesheets t ON e.employee_id = t.employee_id AND t.status = 'ACCEPTED'
+LEFT JOIN Timesheet_Entries te ON t.timesheet_id = te.timesheet_id
+LEFT JOIN Entry_Daily_Hours edh ON te.entry_id = edh.entry_id
 GROUP BY
     e.employee_id,
     e.first_name,
@@ -754,12 +640,9 @@ SELECT
     tdh.day_of_week,
     tdh.hours_quantity
 FROM Employees e
-LEFT JOIN Timesheet_Templates tt
-ON e.employee_id = tt.employee_id
-LEFT JOIN Timesheet_Template_Entries tte
-    ON tt.template_id = tte.template_id
-LEFT JOIN Template_Daily_Hours tdh
-    ON tte.template_entry_id = tdh.template_entry_id
+LEFT JOIN Timesheet_Templates tt ON e.employee_id = tt.employee_id
+LEFT JOIN Timesheet_Template_Entries tte ON tt.template_id = tte.template_id
+LEFT JOIN Template_Daily_Hours tdh ON tte.template_entry_id = tdh.template_entry_id
 WHERE e.employee_id = 7
 ORDER BY tdh.day_of_week;
 
@@ -795,5 +678,3 @@ VALUES (
     DATE '2026-03-03',
     20
 );
-
-COMMIT;
