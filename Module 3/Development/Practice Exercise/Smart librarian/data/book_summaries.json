@@ -1,0 +1,116 @@
+[
+  {
+    "title": "Au Bonheur des Dames",
+    "author": "Emile Zola",
+    "themes": ["consumerism", "ambition", "modernity", "love"],
+    "summary": "Set in nineteenth-century Paris, the novel follows Denise Baudu, a young woman who arrives in the city hoping to build a better life despite difficult circumstances. She begins working at the grand department store Au Bonheur des Dames, where she witnesses the rapid transformation of commerce, the decline of small traditional shops, and the rise of modern consumer culture. As Denise tries to survive in this demanding environment, she is forced to navigate rivalry, ambition, class tensions, and changing expectations for women. The story combines romance with social criticism and explores themes of progress, desire, independence, and the seductive power of wealth and modernity."
+  },
+  {
+    "title": "Une page d'amour",
+    "author": "Emile Zola",
+    "themes": ["love", "passion", "jealousy", "bourgeois life"],
+    "summary": "This novel centers on Hélène Grandjean, a widow who lives a calm and respectable life in Paris with her delicate and emotionally dependent daughter. Her world begins to change when she develops strong feelings for a married doctor, and what first seems like tenderness gradually turns into emotional conflict and inner turmoil. As passion, jealousy, guilt, and duty begin to clash, Hélène must confront the consequences of her desires in a society shaped by strict moral expectations. The novel explores romantic longing, maternal devotion, restraint, and the tension between private emotion and public respectability."
+  },
+  {
+    "title": "Persuasion",
+    "author": "Jane Austen",
+    "themes": ["love", "second chances", "social class", "regret"],
+    "summary": "The novel follows Anne Elliot, an intelligent and sensitive woman who years earlier was persuaded to break off her engagement to Captain Wentworth because of social pressure and concerns about status. When Wentworth unexpectedly returns, now successful and respected, Anne is forced to confront the pain of lost opportunities and the possibility of renewed love. As old emotions resurface, the story examines the influence of family vanity, social class, pride, and personal maturity. It is a reflective and deeply emotional novel about constancy, regret, and the rare chance to reclaim happiness after years of silence and disappointment."
+  },
+  {
+    "title": "Shogun",
+    "author": "James Clavell",
+    "themes": ["power", "culture clash", "survival", "politics"],
+    "summary": "Set in feudal Japan, the novel tells the story of John Blackthorne, an English pilot whose shipwreck leaves him stranded in a land whose customs, politics, and values are completely foreign to him. As he struggles to survive, he becomes drawn into a dangerous world of samurai honor, political strategy, religious conflict, and rivalry between powerful leaders. Through Blackthorne's eyes, the reader experiences the complexity of Japanese society and the deep cultural differences between East and West. The novel explores survival, adaptation, ambition, loyalty, identity, and the human cost of power."
+  },
+  {
+    "title": "Romanul adolescentului miop",
+    "author": "Mircea Eliade",
+    "themes": ["adolescence", "identity", "self-discovery", "intellectual growth"],
+    "summary": "Presented as the introspective account of a young student, the novel captures the emotional instability, ambition, and restlessness of adolescence. The narrator reflects on school life, friendships, insecurity, intellectual discipline, and his intense desire to become exceptional through study and self-control. He constantly examines his own weaknesses, dreams, frustrations, and hopes, turning ordinary moments of youth into opportunities for deep self-analysis. The book is a vivid coming-of-age story about identity, ambition, loneliness, and the struggle to understand oneself during the difficult transition from childhood to adulthood."
+  },
+  {
+    "title": "Thus Spoke Zarathustra",
+    "author": "Friedrich Nietzsche",
+    "themes": ["self-overcoming", "philosophy", "morality", "human potential"],
+    "summary": "Written in a poetic and symbolic style, the book follows Zarathustra as he descends from isolation to share his teachings with humanity. Through speeches, reflections, and parables, Nietzsche explores the need to overcome inherited moral systems and to create new values grounded in strength, freedom, and personal transformation. Central ideas such as the overman, self-overcoming, and the rejection of passive conformity are presented through a voice that is prophetic, provocative, and philosophical. The work is less a conventional narrative than a profound meditation on human potential, spiritual renewal, and the courage to think beyond traditional morality."
+  },
+  {
+    "title": "Fahrenheit 451",
+    "author": "Ray Bradbury",
+    "themes": ["censorship", "freedom", "technology", "conformity"],
+    "summary": "In a future society where books are outlawed and burned, fireman Guy Montag begins as a loyal servant of a system built on censorship, distraction, and control. Over time, encounters with curious and independent-minded people lead him to question the emptiness of his world and the violence used to suppress thought. As he becomes increasingly aware of how deeply society fears knowledge, memory, and reflection, Montag starts a dangerous journey toward intellectual and moral awakening. The novel is a powerful warning about censorship, the passive consumption of entertainment, and the loss of critical thinking, individuality, and freedom."
+  },
+  {
+    "title": "The Idiot",
+    "author": "Fyodor Dostoevsky",
+    "themes": ["innocence", "society", "morality", "tragedy"],
+    "summary": "The novel follows Prince Myshkin, a gentle, honest, and deeply compassionate man who returns to Russian society after treatment for illness. His openness and sincerity set him apart from the selfishness, vanity, manipulation, and emotional instability of the people around him, causing many to see him as naive or foolish. As he becomes entangled in complicated relationships, romantic tension, and moral conflict, his goodness is repeatedly tested by a corrupt and restless world. The novel explores innocence, suffering, love, spiritual purity, and the tragic consequences that arise when genuine goodness collides with pride, passion, and social hypocrisy."
+  },
+  {
+    "title": "Crime and Punishment",
+    "author": "Fyodor Dostoevsky",
+    "themes": ["guilt", "justice", "morality", "redemption"],
+    "summary": "The story follows Rodion Raskolnikov, a poor and isolated former student who commits a brutal murder while trying to justify the act through his own theory of exceptional individuals standing above ordinary morality. Instead of liberation, he is consumed by guilt, paranoia, fear, and psychological torment. As he struggles to live with what he has done, he encounters people whose suffering, kindness, and moral clarity challenge his beliefs and force him toward confrontation with himself. The novel is a profound exploration of crime, conscience, punishment, and the painful possibility of redemption through suffering and truth."
+  },
+  {
+    "title": "1984",
+    "author": "George Orwell",
+    "themes": ["freedom", "control", "surveillance", "totalitarianism"],
+    "summary": "George Orwell's novel presents a dystopian society ruled by a totalitarian state that controls not only actions, but also memory, language, and thought. Citizens live under constant surveillance by Big Brother, while truth is rewritten and independent thinking is treated as a dangerous crime. The protagonist, Winston Smith, quietly begins to question the system and longs for freedom, authenticity, and human connection in a world designed to erase all three. As he struggles against oppression, the novel explores power, fear, propaganda, and the terrifying consequences of political systems built on total control and manipulation."
+  },
+  {
+    "title": "The Hobbit",
+    "author": "J.R.R. Tolkien",
+    "themes": ["friendship", "adventure", "magic", "courage"],
+    "summary": "Bilbo Baggins, a comfort-loving hobbit with no taste for danger, is unexpectedly drawn into an adventure when the wizard Gandalf and a company of dwarves invite him to join their quest. Their mission is to reclaim a treasure long guarded by the dragon Smaug, but the journey soon becomes far more challenging and transformative than Bilbo ever imagined. Along the way, he encounters trolls, goblins, elves, riddles, and acts of bravery that force him to discover strengths he never knew he possessed. The story is filled with wonder, humor, friendship, danger, and the gradual growth of an unlikely hero."
+  },
+  {
+    "title": "Harry Potter and the Sorcerer's Stone",
+    "author": "J.K. Rowling",
+    "themes": ["friendship", "magic", "school", "destiny"],
+    "summary": "Harry Potter is an ordinary boy living an unhappy life until he learns that he is actually a wizard and has been invited to study at Hogwarts School of Witchcraft and Wizardry. Entering this magical world for the first time, he discovers friendship, mystery, and a hidden past connected to forces far greater than he imagined. Alongside his new friends, Harry begins to uncover secrets about his family, his destiny, and the dark power that once threatened the wizarding world. The novel is a captivating blend of magic, adventure, loyalty, and the excitement of discovering one's place in an extraordinary universe."
+  },
+  {
+    "title": "The Book Thief",
+    "author": "Markus Zusak",
+    "themes": ["war", "loss", "humanity", "hope"],
+    "summary": "Set in Nazi Germany during World War II, the novel follows Liesel Meminger, a young girl who discovers comfort, meaning, and emotional survival through books and words. Living with foster parents and surrounded by the fear, violence, and uncertainty of war, she begins stealing books and sharing stories with those around her, including people whose lives are shaped by hunger, grief, and danger. Through Liesel's experiences, the novel explores the brutality of war alongside acts of kindness, resilience, and quiet resistance. It is a moving story about loss, human dignity, friendship, and the power of language to preserve hope in dark times."
+  },
+  {
+    "title": "All Quiet on the Western Front",
+    "author": "Erich Maria Remarque",
+    "themes": ["war", "trauma", "brotherhood", "survival"],
+    "summary": "This anti-war novel follows a group of young German soldiers who enter World War I with patriotic illusions, only to discover the terror, exhaustion, and dehumanization of life at the front. Through the eyes of Paul Bäumer, the reader witnesses the physical destruction of battle and the psychological damage it leaves behind. The bonds of friendship among the soldiers offer moments of solidarity, but cannot shield them from fear, trauma, and the gradual loss of innocence. The novel is a powerful condemnation of war and a deeply human portrait of suffering, survival, and the emptiness behind heroic slogans."
+  },
+  {
+    "title": "Pride and Prejudice",
+    "author": "Jane Austen",
+    "themes": ["love", "society", "family", "class"],
+    "summary": "The novel centers on Elizabeth Bennet, a spirited and intelligent young woman navigating questions of marriage, family expectations, and social status in English society. Her relationship with the proud and reserved Mr. Darcy develops through misunderstanding, wounded pride, changing first impressions, and gradual self-knowledge. Around them, Austen presents a lively world of family pressures, class anxieties, romantic hopes, and social judgment. The novel is both a love story and a sharp social comedy, exploring how personal growth, honesty, and humility are necessary for genuine understanding and lasting affection."
+  },
+  {
+    "title": "To Kill a Mockingbird",
+    "author": "Harper Lee",
+    "themes": ["justice", "racism", "childhood", "morality"],
+    "summary": "Told through the eyes of young Scout Finch, the novel portrays life in a small Southern town shaped by prejudice, inequality, and moral tension. When Scout's father, the principled lawyer Atticus Finch, defends a Black man falsely accused of a crime, the children are forced to confront the harsh realities of racism and injustice. At the same time, Scout and her brother experience the innocence, curiosity, and fears of childhood as they try to understand the adults and mysteries around them. The novel is both a coming-of-age story and a powerful reflection on justice, empathy, courage, and moral integrity."
+  },
+  {
+    "title": "The Alchemist",
+    "author": "Paulo Coelho",
+    "themes": ["destiny", "dreams", "journey", "spirituality"],
+    "summary": "The novel follows Santiago, a young shepherd who leaves behind the familiar world of his flock after dreaming repeatedly of a hidden treasure. As he travels across deserts and foreign lands, he meets people who teach him about courage, faith, love, fear, and the importance of listening to one's heart. What begins as a search for material treasure gradually becomes a spiritual journey toward self-knowledge and purpose. The story is simple and symbolic, exploring destiny, perseverance, and the idea that true fulfillment comes from pursuing one's personal legend."
+  },
+  {
+    "title": "Dune",
+    "author": "Frank Herbert",
+    "themes": ["power", "politics", "survival", "prophecy"],
+    "summary": "Set on the desert planet Arrakis, the novel follows Paul Atreides, whose noble family is drawn into a dangerous political struggle over control of the valuable spice that makes space travel and empire possible. After betrayal and loss shatter his world, Paul must survive in a harsh environment and adapt to the culture of the Fremen, the people of the desert. As he grows in power and awareness, questions of destiny, leadership, religion, and manipulation become central to his transformation. The novel is a rich and complex science fiction epic about survival, prophecy, ecology, and the corrupting force of power."
+  },
+  {
+    "title": "The Little Prince",
+    "author": "Antoine de Saint-Exupéry",
+    "themes": ["friendship", "loneliness", "wonder", "love"],
+    "summary": "This poetic and philosophical tale begins when a pilot stranded in the desert meets a mysterious young prince from another planet. As the prince shares stories of his travels among strange worlds and unusual adults, the novel gently reveals truths about loneliness, love, responsibility, and the loss of childhood wonder. His relationship with the rose he left behind becomes a symbol of affection, attachment, and the meaning of care. Beneath its simplicity, the story is a moving reflection on human nature, imagination, innocence, and the invisible things that truly matter."
+  }
+]
