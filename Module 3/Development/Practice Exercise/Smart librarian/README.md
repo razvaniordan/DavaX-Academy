@@ -18,57 +18,36 @@ Smart Librarian is an intelligent system that matches user interests with releva
 ## Project Structure
 
 ```
-├── build_vector_store.py      # Builds and updates the vector database
-├── chatbot.py                 # Main chatbot logic for recommendations
-├── dependencies.txt           # Python package requirements
+Smart Librarian/
+├── api.py                          # Flask API backend
+├── chatbot.py                      # Original CLI version (kept for reference)
+├── build_vector_store.py           # Vector store builder
+├── dependencies.txt                # Python dependencies
+├── .env                            # Environment variables (API keys, etc.)
 ├── data/
-│   └── book_summaries.json    # Book data (titles, authors, themes, summaries)
-└── chroma_db/                 # Vector database storage (created during setup)
+│   └── book_summaries.json         # Book data
+├── chroma_db/                      # Vector database storage (it is created after running build_vector_store.py)
+└── frontend/                       # React frontend
+    ├── package.json
+    ├── public/
+    │   └── index.html
+    └── src/
+        ├── index.js
+        ├── index.css
+        ├── App.js
+        ├── App.css
+        └── components/
+            ├── ChatInterface.js
+            ├── ChatInterface.css
+            ├── Message.js
+            └── Message.css
 ```
 
 ## Prerequisites
 
-- Python 3.8 or higher
-- OpenAI API key
-- Git (for version control)
-
-## Installation
-
-### Step 1: Clone the Repository
-
-```bash
-git clone <repository-url>
-cd "Smart librarian"
-```
-
-### Step 2: Create a Virtual Environment (Recommended)
-
-```bash
-# On Windows
-python -m venv venv
-venv\Scripts\activate
-
-# On macOS/Linux
-python3 -m venv venv
-source venv/bin/activate
-```
-
-### Step 3: Install Dependencies
-
-```bash
-pip install -r dependencies.txt
-```
-
-### Step 4: Set Up Environment Variables
-
-Create a `.env` file in the project root directory:
-
-```bash
-# .env
-OPENAI_API_KEY=your_openai_api_key_here
-```
-
-Replace `your_openai_api_key_here` with your actual OpenAI API key from [platform.openai.com](https://platform.openai.com/api-keys).
+- **Python 3.8+** - For the backend
+- **Node.js 14+ and npm** - For the frontend
+- **OpenAI API Key** - Required for model interactions
 
 ## Building the Vector Store
 
@@ -107,15 +86,68 @@ This script will:
 - Store embeddings in the ChromaDB database (`./chroma_db/`)
 - Detect and handle updates to existing books if you updated `data/book_summaries.json` file
 
-### Step 3: Running the Chatbot
+## Setup Instructions
+
+### 1. Backend Setup
+
+#### Step 1a: Install Python Dependencies
+```bash
+pip install -r dependencies.txt
+```
+
+#### Step 1b: Set up Environment Variables
+Create a `.env` file in the project root directory:
+```
+OPENAI_API_KEY=your_openai_api_key_here
+```
+Replace `your_openai_api_key_here` with your actual OpenAI API key from [platform.openai.com](https://platform.openai.com/api-keys).
+
+### 2. Frontend Setup
+
+#### Step 2a: Navigate to Frontend Directory
+```bash
+cd frontend
+```
+
+#### Step 2b: Install Node Dependencies
+```bash
+npm install
+```
+
+## Running the Application
+
+### Run in Two Separate Terminals
+
+**Terminal 1 - Start the Backend API:**
+```bash
+# From the project root directory
+python api.py
+```
+The backend will start at `http://localhost:5000`
+
+**Terminal 2 - Start the Frontend:**
+```bash
+# From the frontend directory
+cd frontend
+npm start
+```
+The frontend will automatically open at `http://localhost:3000`
+
+## Usage
+
+1. Start the backend API (it will run on `http://localhost:5000`)
+2. Start the frontend (it will run on `http://localhost:3000`)
+3. Open your browser to `http://localhost:3000`
+4. Ask for book recommendations in natural language
+5. The AI librarian will search through the book database and provide personalized recommendations
+
+### Example Interaction with CLI
+
+#### Running the Chatbot
 
 ```bash
 python chatbot.py
 ```
-
-## Usage
-
-### Example Interaction
 
 The user will interact with the chatbot in CLI.
 
@@ -134,6 +166,14 @@ You: exit
 Assistant: Goodbye!
 ```
 
+## What's Running Where
+
+- **Backend API:** http://localhost:5000
+- **Frontend Application:** http://localhost:3000
+- **API Health Check:** http://localhost:5000/api/health
+
+You can test the API directly in your browser by visiting `http://localhost:5000/api/health`
+
 ### Key Functions
 
 - **`retrieve_books(user_query)`**: Finds the 3 most relevant books based on semantic similarity
@@ -150,6 +190,8 @@ Assistant: Goodbye!
 | `chromadb` | Vector database for storing book embeddings |
 | `python-dotenv` | Environment variable management |
 | `tiktoken` | Token counting for OpenAI API |
+| `flask` | Backend web framework for exposing the recommendation API |
+| `flask-cors` | Enables Cross-Origin Resource Sharing so the React frontend can communicate with the Flask backend |
 
 ## Configuration
 
@@ -166,14 +208,38 @@ Assistant: Goodbye!
 
 ## Troubleshooting
 
-### Issue: "OPENAI_API_KEY not found"
-**Solution**: Ensure your `.env` file exists in the project root and contains your valid OpenAI API key.
+### "Cannot connect to backend"
+- Make sure the backend API is running with `python api.py`
+- Check that the API is accessible at `http://localhost:5000`
+- Verify CORS is enabled (it should be in api.py)
 
-### Issue: "Collection not found"
-**Solution**: Run `python build_vector_store.py` first to create the vector database.
+### "OPENAI_API_KEY not found"
+- Create a `.env` file in the project root
+- Add your OpenAI API key: `OPENAI_API_KEY=sk-...`
+- Restart the backend
 
-### Issue: "ModuleNotFoundError"
-**Solution**: Reinstall dependencies with `pip install -r dependencies.txt`, ensuring your virtual environment is activated.
+### "Vector store not found"
+- Make sure you've run `python build_vector_store.py` first
+- Check that the `chroma_db` folder exists
 
-### Issue: Slow embeddings generation
-**Solution**: This is normal during the first vector store build. Subsequent retrievals are much faster.
+### "Frontend won't start"
+- Make sure you're in the `frontend` directory: `cd frontend`
+- Delete `node_modules` and run `npm install` again
+- Make sure Node.js 14+ is installed: `node --version`
+
+### "Port 5000 or 3000 already in use"
+- Check what's using the port and close it
+- Or modify the port in `api.py` (change `port=5000`) or `frontend/package.json`
+
+## Development Notes
+
+### Backend (Python)
+- The `api.py` file contains the Flask server with all API endpoints
+- The original `chatbot.py` is kept as a CLI reference implementation
+- Modify `api.py` to add new endpoints or change behavior
+
+### Frontend (React)
+- Main logic is in `frontend/src/components/ChatInterface.js`
+- Styling uses CSS modules for component isolation
+- Axios is used for HTTP requests to the backend
+- The UI uses React Icons for icons
